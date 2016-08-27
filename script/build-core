@@ -25,13 +25,14 @@ BC_FILE=`find $core -name '*.bc' -print`
 # picodrive: 134217728
 
 (cd `dirname $BC_FILE` && \
-  emcc `basename ${BC_FILE}` -o ${DIR}/${core}/core.js -O3 -Oz \
+  emcc `basename ${BC_FILE}` -o ${DIR}/${core}/core.js -O1 -Oz \
     -s EMULATED_FUNCTION_POINTERS=2 \
     -s TOTAL_MEMORY=${TOTAL_MEMORY-134217728} \
     -s EXPORTED_FUNCTIONS=@${DIR}/exports.json \
     -s EXPORTED_RUNTIME_METHODS=@${DIR}/runtime_exports.json \
     -s SHELL_FILE=${SHELL_FILE} \
     -s FORCE_FILESYSTEM=1 \
+    --memory-init-file 0 \
 )
 
 cp retro.js ${core}/index.js
